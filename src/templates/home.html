@@ -1,0 +1,142 @@
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+
+{% block head_title %}Welcome | {{ block.super }} {% endblock %}
+
+<style>
+{% block style %}
+
+.navbar-static-top {
+  margin-bottom: 0px !important;
+}
+
+.jumbotron {
+  background-color: #426346;
+  color: #FFF;
+}
+{% endblock %}
+</style>
+
+
+
+{% block jumbotron %}
+{% if not request.user.is_authenticated %}
+<div class="jumbotron">
+  <div class="container">
+  	<div class="row">
+      <div class="col-sm-6">
+      <h1><b style="color:gray"></b>Tanimu Django 1.8</h1>
+      <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. 
+        It includes the responsive CSS and HTML, so it also adapts to your viewport and device(tanimu is user and 123 is password).</p>
+      <p>
+      <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">Join Us &raquo;</a>
+      </p>
+      </div>
+      <div class="col-sm-6" width="560" height="315">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/kqtD5dpn9C8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <!-- <img src="{% static 'img/marketing1.jpg' %}" class="img-responsive"> -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+     
+{% endblock %}
+
+
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<h1>You are logged in!</h1>
+
+<!-- {{ request.user.is_staff }} -->
+  {% if queryset %}
+  <h4>Welcome Staff</h4>
+    <table class="table" >
+    {% for instance in queryset %}
+      <tr>
+        <td>{{ forloop.counter }}</td><td>{{ instance.email }}</td><td>{{ instance.full_name }}</td><td>{{ instance.timestamp|timesince }} ago</td><td>{{ instance.updated }}</td>
+      </tr>
+        {% if 'edu' in instance.email %}
+        <tr><td>is equal</td></tr>
+        {% else %}
+        <tr><td>is not equal</td></tr>
+        {% endif %}
+
+    {% endfor %}
+    </table>
+  {% endif %}
+
+{% else %}
+<div class="row">
+  <div class="col-sm-3 pull-right">
+    <p class="lead text-align-center">{{title}}</p>
+
+    <form method="POST" class="uniForm" action="">{% csrf_token %}
+      {{form|crispy}}
+      <input class="btn btn-primary " type="submit" value="Sing Up">
+    </form>
+
+  </div>
+
+  <div class="col-sm-3">
+    <p class="lead text-align-center">Django &amp; Bootstrap</p>
+      <img src='{% static "img/marketing1.jpg" %}' class='img-responsive' />
+   
+  </div>
+
+  <div class="col-sm-3">
+    <p class="lead text-align-center">Created for Starters
+      <br/>
+      <span class='fa-stack fa-lg fa-5x'>
+      <i class='fa fa-comment-o fa-stack-2x'></i>
+      <i style='color:rgb(236, 236, 44);' class="fa fa-bolt fa-stack-1x"></i>
+      </span>
+    </p>
+  
+      
+  </div>
+
+  <div class="col-sm-3">
+    <p class="lead text-align-center">Always Opean Source<br><br>
+      <span class="fa-stack fa-lg fa-5x">
+      <i class="fa fa-circle-o-notch fa-stack-2x"></i>
+      <i class="fa fa-square-o fa-stack-2x"></i>
+      <i class="fa fa-github fa-stack-1x"></i>
+      </span>
+    </p>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+<!-- 
+<p class='lead text-align-center'>Django &amp; Bootstrap</p>
+      
+</div>
+
+<div class='col-sm-3'>
+<p class='lead text-align-center'>Created for Starters 
+<br/>
+<span class='fa-stack fa-lg fa-5x'>
+<i class='fa fa-comment-o fa-stack-2x'></i>
+<i style='color:yellow;' class="fa fa-bolt fa-stack-1x"></i>
+
+</span>
+</p>
+
+</div>
+
+<div class='col-sm-3'>
+<p class='lead text-align-center'>Always Open Source <br/><br/>
+
+<span class="fa-stack fa-lg fa-5x">
+<i class="fa fa-circle-o-notch fa-stack-2x"></i>
+  <i class="fa fa-square-o fa-stack-2x"></i>
+  <i class="fa fa-github fa-stack-1x"></i>
+</span>
+</p> -->
